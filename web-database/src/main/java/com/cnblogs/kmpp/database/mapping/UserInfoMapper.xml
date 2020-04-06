@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cnblogs.kmpp.database.dao.UserInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.cnblogs.kmpp.database.model.UserInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="uname" property="uname" jdbcType="VARCHAR"/>
+        <result column="unumber" property="unumber" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, uname, unumber
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_info
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM
+        user_info
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.cnblogs.kmpp.database.model.UserInfo">
+        INSERT INTO user_info (id,
+        uname, unumber
+        )
+        VALUES (#{id,jdbcType=INTEGER},
+        #{uname,jdbcType=VARCHAR},
+        #{unumber,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.cnblogs.kmpp.database.model.UserInfo">
+        INSERT INTO user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uname != null">
+                uname,
+            </if>
+            <if test="unumber != null">
+                unumber,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="uname != null">
+                #{uname,jdbcType=VARCHAR},
+            </if>
+            <if test="unumber != null">
+                #{unumber,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cnblogs.kmpp.database.model.UserInfo">
+        update user_info
+        <set>
+            <if test="uname != null">
+                uname = #{uname,jdbcType=VARCHAR},
+            </if>
+            <if test="unumber != null">
+                unumber = #{unumber,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.cnblogs.kmpp.database.model.UserInfo">
+        update user_info
+        set uname = #{uname,jdbcType=VARCHAR},
+        unumber =
+        #{unumber,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <resultMap type="com.cnblogs.kmpp.database.model.UserInfo" id="UserCourseMap"
+               extends="BaseResultMap">
+        <collection property="courseInfos" javaType="list"
+                    ofType="com.cnblogs.kmpp.database.model.CourseInfo">
+            <id property="id" column="course_id" jdbcType="INTEGER"/>
+            <result property="cname" column="cname" jdbcType="VARCHAR"/>
+            <result property="caddress" column="caddress" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAll" resultMap="UserCourseMap">
+        SELECT u.id, u.uname, u.unumber, c.id AS course_id, c.cname, c.caddress
+        FROM user_info AS u
+        LEFT JOIN course_user_info AS cu ON u.id = cu.uid
+        LEFT JOIN course_info AS c ON cu.cid = c.id
+    </select>
+</mapper>

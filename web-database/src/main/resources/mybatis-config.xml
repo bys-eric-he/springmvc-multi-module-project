@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- sql 打印到控制台 -->
+        <!--<setting name="logImpl" value="STDOUT_LOGGING"/>-->
+        <!-- mybatis sql打印到log4j文件 log4j日志级别调至DEBUG-->
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+</configuration>

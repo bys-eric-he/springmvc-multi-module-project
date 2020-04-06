@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+    <!-- spring可以自动去扫描base-package下面或者子包下面的java文件，
+    	如果扫描到有@Component @Controller@Service等这些注解的类，则把这些类注册为bean -->
+    <context:component-scan base-package="com.cnblogs.kmpp.*"/>
+    <!--引入配置属性文件 -->
+    <!--<context:property-placeholder order="0" location="classpath:redis.properties" />-->
+    <!--<context:property-placeholder order="1" location="classpath:config.properties" />-->
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>classpath:config.properties</value>
+                <value>classpath:redis.properties</value>
+            </array>
+        </property>
+    </bean>
+    <import resource="classpath:com/cnblogs/kmpp/database/mapping/*Mapper.xml"/>
+    <import resource="classpath:blank-disc.xml"/>
+    <import resource="classpath:redis-content.xml"/>
+    <import resource="classpath:quartz-config.xml"/>
+    <import resource="classpath:spring-mybatis.xml"/>
+
+</beans>

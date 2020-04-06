@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+    <bean id="blankDisc" class="com.cnblogs.kmpp.common.Impl.BlankDisc">
+        <!-- 将字面量注入到构造器中-->
+        <constructor-arg name="title" value="Sgt. Papper's Lonely Hearts Club Band"/>
+        <constructor-arg name="artist" value="The Beatles"/>
+        <constructor-arg name="tracks">
+            <list>
+                <value>Sgt. Papper's Lonely Hearts Club Band</value>
+                <value>With a Little Help from My Friends</value>
+                <value>Lucy in the Sky with Diamonds</value>
+                <value>Getting Better</value>
+                <value>Fixing a Hole</value>
+            </list>
+        </constructor-arg>
+        <!-- 将字面量注入到属性中-->
+        <property name="listener" value="my name is eric, I am a listener!"/>
+    </bean>
+</beans>
